@@ -1,0 +1,20 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "alarmTimerTwo", "alarmTimerTwo\alarmTimerTwo.vcxproj", "{B8D68715-4284-42D5-A18B-137F9D6A2110}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Win32 = Debug|Win32
+		Release|Win32 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{B8D68715-4284-42D5-A18B-137F9D6A2110}.Debug|Win32.ActiveCfg = Debug|Win32
+		{B8D68715-4284-42D5-A18B-137F9D6A2110}.Debug|Win32.Build.0 = Debug|Win32
+		{B8D68715-4284-42D5-A18B-137F9D6A2110}.Release|Win32.ActiveCfg = Release|Win32
+		{B8D68715-4284-42D5-A18B-137F9D6A2110}.Release|Win32.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

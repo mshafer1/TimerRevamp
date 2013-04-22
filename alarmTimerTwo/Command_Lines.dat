@@ -1,0 +1,4 @@
+"sleep" shutdown/h
+"hibernate" shutdown/h
+
+"play" start iexplore.exe www.pandora.com
