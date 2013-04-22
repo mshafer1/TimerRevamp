@@ -138,6 +138,7 @@ void main()
 	fin.open("settings.dat");
 	bool config = true;
 	string line = "";
+	string query = "";
 	if(!fin.fail())
 	{
 		cout << "Would you like to use current settings?:" << endl << "( ";
@@ -168,7 +169,7 @@ void main()
 		fout.open("settings.dat");
 
 		cout << "What would you like the computer to do?:" << endl;
-		string query = "";
+		
 		getline(cin,query);
 
 		command = query;
@@ -178,22 +179,25 @@ void main()
 		
 		getline(cin,line);
 
-		fout << command << endl << line;
+		fout << query << endl << line;
 
 	}
 	else
 	{
-		getline(fin,command);
+		getline(fin,query);
+		command = query;
+		getCommand(command);
 		getline(fin,line);
+		//getline(fin,query);
 	}
 
 	if(line.length() == 0 || line[0] == 't' || line[0] == 'T')
 	{
-		timer(command);
+		timer(query);
 	}
 	else
 	{
-		alarm(command);
+		alarm(query);
 	}  
 	executeCommand(command);
 }
