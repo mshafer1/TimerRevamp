@@ -421,6 +421,7 @@ void TimeValue::displayB()
 
 void Clock::wait(int secondsToWait)
 {
+	
 	TimeValue target;
 	target.total+=secondsToWait;
 	target.updateCount();

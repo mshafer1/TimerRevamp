@@ -17,9 +17,9 @@ void timer(const string& command)
 	char dot = '.';
 	int seconds = 0;
 	string line;
-	cout << "Please enter the number of minutes that you would like to wait for. "
+	cout << "Please enter the floating point number of minutes that you would like to wait for. "
 		<< "if you wish to wait for an additional number of seconds, "
-		<< "enter a time point (period) then the number of seconds";
+		<< "enter a colon (:) then the number of seconds";
 	getline(cin,line);
 	if(line.length() > 0)
 	{	
@@ -37,6 +37,8 @@ void timer(const string& command)
 	{
 		minutes = 5;
 	}
+	system("cls");
+	cout << command << endl;
 	Clock current;
 	current.wait(seconds + 60 * minutes);
 }
@@ -67,13 +69,15 @@ void alarm(const string& command)
 	}
 	else
 	{
-		hours = current.timeValue.hours+1;
-		minutes = 0;
+		hours = current.timeValue.hours;
+		minutes = 50;
 	}
 	TimeValue target;
 	target.hours = hours;
 	target.minutes = minutes;
 	target.seconds = seconds;
+	system("cls");
+	cout << command << endl;
 	current.wait(target);
 }
 
