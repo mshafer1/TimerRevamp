@@ -6,15 +6,18 @@
 #include<sstream>
 using namespace std;
 
-void executeCommand(const string& command)
+void executeCommand(const string command[])
 {
-	system(command.c_str());
+	for(int i = 1; i < 3 && command[i].length() > 0; i++)
+	{
+		system(command[i].c_str());
+	}
 }
 
 void timer(const string& command)
 {
 	float minutes = 0;
-	char dot = '.';
+	char dot = ':';
 	int seconds = 0;
 	string line;
 	cout << "Please enter the floating point number of minutes that you would like to wait for. "
@@ -26,7 +29,18 @@ void timer(const string& command)
 		if(line.find(":") != -1)
 		{
 			istringstream iss(line);
-			iss >> minutes >> dot >> seconds;
+			iss >> minutes ;
+			iss >> dot;
+			iss >> seconds;
+		}
+		if(line[0] == ':')
+		{
+			string lines = "";
+			for(int i = 1; i < 79 && i < line.length(); i++)
+			{
+				lines += line[i];
+			}
+			seconds = atof(lines.c_str());
 		}
 		else
 		{
@@ -81,11 +95,12 @@ void alarm(const string& command)
 	current.wait(target);
 }
 
-void getCommand(string& command)
+void getCommand(string command[])
 {
 	bool found = false;
 	int lineIndex;
 	string line;
+	string option = command[0];
 	ifstream commandLines;
 	commandLines.open("Command_Lines.dat");
 	while(!found && !commandLines.eof() && !commandLines.fail())
@@ -102,26 +117,41 @@ void getCommand(string& command)
 		}
 		//once token is seperated, increment lineIndex one more time to skip over space on next call.
 		lineIndex++;
-		found = (command == token);
-	}
-	commandLines.close();
-	if(found)
-	{
-		command = "";
-		for(; lineIndex+1 < line.length(); lineIndex++)
+		found = (command[0] == token);
+		if(found)
 		{
-			command += line[lineIndex+1];
+			for(int i = 0; i < 3 && line.length() > 0; i++)
+			{
+				command[i] = "";
+				string commandLine;
+				command[i] = line;
+				getline(commandLines,line);
+			}
 		}
 	}
-	else
+	commandLines.close();
+	
+	if(!found)
 	{
 		ofstream output;
 		output.open("Command_Lines.dat",ios::app);
 		cout << "Please enter appropriate system command to complete task;";
-		getline(cin,line);
-		output << "\"" <<  command << "\"" << " " << line << endl;
+		line = "blah";
+		for(int i = 1; i < 3 && line.length() > 0; i++)
+		{
+			getline(cin,line);
+			command[i] = "";
+			char commandLine[80];
+			strcpy(commandLine,line.c_str());
+			command[i] = commandLine;
+		}
+
+		output << "\"" <<  option << "\"";
+		for(int i = 0; i < 3 && command[i].length() > 0; i++)
+		{
+			output << " " << command[i] << endl;
+		}
 		output.close();
-		command = line;
 	}
 }
 
@@ -133,7 +163,7 @@ void main()
 	timeinfo = localtime (&rawtime);
 	//cout << asctime(timeinfo);
 
-	string command;
+	string command[3];
 	ifstream fin;
 	fin.open("settings.dat");
 	bool config = true;
@@ -144,15 +174,15 @@ void main()
 		cout << "Would you like to use current settings?:" << endl << "( ";
 		while(!fin.eof())
 		{
-		getline(fin,command);
-		cout << command << ' ';
+		getline(fin,command[0]);
+		cout << command[0] << ' ';
 		}
 		cout << ")\n";
 		fin.close();
 		fin.open("settings.dat");
 		cin.clear();
-		getline(cin,command);
-		if((command.length() == 0) || (command == "yes" || command == "Yes" || command == "y" || command == "Y"))
+		getline(cin,command[0]);
+		if((command[0].length() == 0) || (command[0] == "yes" || command[0] == "Yes" || command[0][0] == 'y' || command[0][0] == 'Y'))
 		{
 			config = false;
 		}
@@ -172,7 +202,7 @@ void main()
 		
 		getline(cin,query);
 
-		command = query;
+		command[0] = query;
 		getCommand(command);
 
 		cout << "Would you like to use alaerm mode or timer mode? (a/t):";
@@ -185,7 +215,7 @@ void main()
 	else
 	{
 		getline(fin,query);
-		command = query;
+		command[0] = query;
 		getCommand(command);
 		getline(fin,line);
 		//getline(fin,query);
