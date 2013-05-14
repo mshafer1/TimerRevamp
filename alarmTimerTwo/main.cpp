@@ -6,9 +6,11 @@
 #include<sstream>
 using namespace std;
 
+const int MAX_COMMAND_LINES = 5;
+
 void executeCommand(const string command[])
 {
-	for(int i = 1; i < 3 && command[i].length() > 0; i++)
+	for(int i = 1; i < MAX_COMMAND_LINES && command[i].length() > 0; i++)
 	{
 		system(command[i].c_str());
 	}
@@ -120,7 +122,7 @@ void getCommand(string command[])
 		found = (command[0] == token);
 		if(found)
 		{
-			for(int i = 0; i < 3 && line.length() > 0; i++)
+			for(int i = 0; i < MAX_COMMAND_LINES && line.length() > 0; i++)
 			{
 				command[i] = "";
 				string commandLine;
@@ -137,7 +139,7 @@ void getCommand(string command[])
 		output.open("Command_Lines.dat",ios::app);
 		cout << "Please enter appropriate system command to complete task;";
 		line = "blah";
-		for(int i = 1; i < 3 && line.length() > 0; i++)
+		for(int i = 1; i < MAX_COMMAND_LINES && line.length() > 0; i++)
 		{
 			getline(cin,line);
 			command[i] = "";
@@ -147,7 +149,7 @@ void getCommand(string command[])
 		}
 
 		output << "\"" <<  option << "\"";
-		for(int i = 0; i < 3 && command[i].length() > 0; i++)
+		for(int i = 0; i < MAX_COMMAND_LINES && command[i].length() > 0; i++)
 		{
 			output << " " << command[i] << endl;
 		}
@@ -163,7 +165,7 @@ void main()
 	timeinfo = localtime (&rawtime);
 	//cout << asctime(timeinfo);
 
-	string command[3];
+	string command[MAX_COMMAND_LINES];
 	ifstream fin;
 	fin.open("settings.dat");
 	bool config = true;
@@ -205,7 +207,7 @@ void main()
 		command[0] = query;
 		getCommand(command);
 
-		cout << "Would you like to use alaerm mode or timer mode? (a/t):";
+		cout << "Would you like to use alarm mode or timer mode? (a/t):";
 		
 		getline(cin,line);
 
